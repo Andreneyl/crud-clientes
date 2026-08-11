@@ -112,7 +112,7 @@ const [erros, setErros] = useState({});
         />
         </Grid>
 
-        <Grid size={6}>
+        <Grid size={8}>
           <TextField
             fullWidth
             label="Email"
@@ -123,26 +123,8 @@ const [erros, setErros] = useState({});
             helperText={erros.email}
           />
         </Grid>
-
-        <Grid size={6}>
-        <TextField
-            fullWidth
-            label="Telefone"
-            name="telefone"
-            value={form.telefone}
-            onChange={alterar}
-            slotProps={{
-                input: {
-                inputComponent: IMaskInput,
-                inputProps: {
-                    mask: "(00) 00000-0000",
-                },
-                },
-            }}
-            />
-        </Grid>
-
-        <Grid size={6}>
+        
+        <Grid size={4}>
         <TextField
             fullWidth
             label="CEP"
@@ -162,23 +144,23 @@ const [erros, setErros] = useState({});
             />
         </Grid>
 
-        <Grid size={6}>
-          <TextField
-            fullWidth
-            label="Número"
-            name="numero"
-            value={form.numero}
-            onChange={alterar}
-          />
-        </Grid>
-
-        <Grid size={12}>
+        <Grid size={9}>
           <TextField
             fullWidth
             label="Logradouro"
             name="logradouro"
             value={form.logradouro}
             disabled
+          />
+        </Grid>
+
+        <Grid size={3}>
+          <TextField
+            fullWidth
+            label="Número"
+            name="numero"
+            value={form.numero}
+            onChange={alterar}
           />
         </Grid>
 

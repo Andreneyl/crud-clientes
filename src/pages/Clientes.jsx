@@ -69,7 +69,7 @@ export default function Clientes() {
 
       setClienteEditando(null);
     } catch (error) {
-      console.error("Erro ao salvar cliente:", error);
+      console.error("Erro ao salvar dado do cliente:", error);
     }
   }
 

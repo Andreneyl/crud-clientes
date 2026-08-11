@@ -39,25 +39,29 @@ export default function Clientes() {
   async function salvar(cliente) {
     try {
       if (cliente.id) {
-        const response = await atualizarCliente(cliente);
+        // 1. Envia para o backend
+        await atualizarCliente(cliente);
 
-        // Pega o cliente retornado pela API ou usa o objeto editado como garantia
-        const clienteAtualizado = response.data?.data || response.data || cliente;
-
+        // 2. Atualiza a linha na tabela mantendo todos os campos
         setClientes((lista) =>
           lista.map((c) =>
-            c.id === cliente.id ? clienteAtualizado : c
+            c.id === cliente.id
+              ? {
+                  ...c,
+                  nome: cliente.nome,
+                  cidade: cliente.cidade,
+                  uf: cliente.uf,
+                  email: cliente.email,
+                  telefone: cliente.telefone,
+                }
+              : c
           )
         );
       } else {
         const response = await salvarCliente(cliente);
+        const novoCliente = response.data?.data || response.data || cliente;
 
-        const novoCliente = response.data?.data || response.data;
-
-        setClientes((lista) => [
-          ...lista,
-          novoCliente,
-        ]);
+        setClientes((lista) => [...lista, novoCliente]);
       }
 
       setClienteEditando(null);

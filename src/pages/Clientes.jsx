@@ -38,28 +38,31 @@ export default function Clientes() {
 
   async function salvar(cliente) {
     try {
-      if (cliente.id) {
-        // 1. Envia para o backend
-        await atualizarCliente(cliente);
+      const clienteSemMascara = {
+        ...cliente,
+        cep: cliente.cep ? cliente.cep.replace(/\D/g, "") : "",
+      };
 
-        // 2. Atualiza a linha na tabela mantendo todos os campos
+      if (clienteSemMascara.id) {
+        await atualizarCliente(clienteSemMascara);
+        
         setClientes((lista) =>
           lista.map((c) =>
-            c.id === cliente.id
+            c.id === clienteSemMascara.id
               ? {
                   ...c,
-                  nome: cliente.nome,
-                  cidade: cliente.cidade,
-                  uf: cliente.uf,
-                  email: cliente.email,
-                  cep: cliente.cep,
+                  nome: clienteSemMascara.nome,
+                  cidade: clienteSemMascara.cidade,
+                  uf: clienteSemMascara.uf,
+                  email: clienteSemMascara.email,
+                  cep: clienteSemMascara.cep,
                 }
               : c
           )
         );
       } else {
-        const response = await salvarCliente(cliente);
-        const novoCliente = response.data?.data || response.data || cliente;
+        const response = await salvarCliente(clienteSemMascara);
+        const novoCliente = response.data?.data || response.data || clienteSemMascara;
 
         setClientes((lista) => [...lista, novoCliente]);
       }

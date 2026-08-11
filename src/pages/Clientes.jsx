@@ -39,7 +39,7 @@ export default function Clientes() {
   async function salvar(cliente) {
     try {
       if (cliente.id) {
-        const response = await atualizarCliente(cliente.id, cliente);
+        const response = await atualizarCliente(cliente);
 
         setClientes((lista) =>
           lista.map((c) =>

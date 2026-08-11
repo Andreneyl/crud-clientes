@@ -51,7 +51,7 @@ export default function ClienteTable({
             </TableCell>
 
             <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>
-              Telefone
+              CEP
             </TableCell>
 
             <TableCell
@@ -86,7 +86,7 @@ export default function ClienteTable({
 
                 <TableCell>{cliente.email}</TableCell>
 
-                <TableCell>{cliente.telefone}</TableCell>
+                <TableCell>{cliente.cep}</TableCell>
 
                 <TableCell align="center">
                   <IconButton

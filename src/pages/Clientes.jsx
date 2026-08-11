@@ -52,7 +52,7 @@ export default function Clientes() {
                   cidade: cliente.cidade,
                   uf: cliente.uf,
                   email: cliente.email,
-                  telefone: cliente.telefone,
+                  cep: cliente.cep,
                 }
               : c
           )

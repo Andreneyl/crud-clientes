@@ -74,6 +74,14 @@ export default function Clientes() {
   }
 
   async function excluir(id) {
+    const confirmar = window.confirm(
+      "Tem certeza que deseja excluir este cliente?"
+    );
+
+    if (!confirmar) {
+      return;
+    }
+
     try {
       await excluirCliente(id);
 

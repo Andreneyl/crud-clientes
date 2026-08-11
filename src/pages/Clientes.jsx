@@ -9,6 +9,13 @@ import {
 import ClienteForm from "../components/ClienteForm";
 import ClienteTable from "../components/ClienteTable";
 
+import {
+    listarClientes,
+    salvarCliente,
+    atualizarCliente,
+    excluirCliente,
+} from "../services/clienteService";
+
 export default function Clientes() {
   const [clientes, setClientes] = useState([]);
   const [clienteEditando, setClienteEditando] = useState(null);
@@ -16,11 +23,17 @@ export default function Clientes() {
 
   // Carrega clientes salvos
   useEffect(() => {
-    const dados = localStorage.getItem("clientes");
+    async function carregarClientes() {
+      try {
+          const response = await listarClientes();
 
-    if (dados) {
-      setClientes(JSON.parse(dados));
+          setClientes(response.data);
+      } catch (error) {
+          console.error("Erro ao carregar clientes:", error);
+      }
     }
+
+    carregarClientes();
   }, []);
 
   // Salva automaticamente

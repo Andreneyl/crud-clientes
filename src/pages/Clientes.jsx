@@ -41,17 +41,22 @@ export default function Clientes() {
       if (cliente.id) {
         const response = await atualizarCliente(cliente);
 
+        // Pega o cliente retornado pela API ou usa o objeto editado como garantia
+        const clienteAtualizado = response.data?.data || response.data || cliente;
+
         setClientes((lista) =>
           lista.map((c) =>
-            c.id === cliente.id ? response.data : c
+            c.id === cliente.id ? clienteAtualizado : c
           )
         );
       } else {
         const response = await salvarCliente(cliente);
 
+        const novoCliente = response.data?.data || response.data;
+
         setClientes((lista) => [
           ...lista,
-          response.data,
+          novoCliente,
         ]);
       }
 
@@ -73,9 +78,10 @@ export default function Clientes() {
     }
   }
 
-  const clientesFiltrados = clientes.filter((cliente) =>
-    cliente.nome.toLowerCase().includes(pesquisa.toLowerCase())
-  );
+  const clientesFiltrados = clientes.filter((cliente) => {
+    const nome = cliente?.nome || "";
+    return nome.toLowerCase().includes(pesquisa.toLowerCase());
+  });
 
   return (
     <Container maxWidth="lg" sx={{ mt: 5, mb: 5 }}>

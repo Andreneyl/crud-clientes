@@ -36,27 +36,41 @@ export default function Clientes() {
     carregarClientes();
   }, []);
 
-  // Salva automaticamente
-  useEffect(() => {
-    localStorage.setItem("clientes", JSON.stringify(clientes));
-  }, [clientes]);
+  async function salvar(cliente) {
+    try {
+      if (cliente.id) {
+        const response = await atualizarCliente(cliente.id, cliente);
 
-  function salvar(cliente) {
-    if (cliente.id) {
-      setClientes((lista) =>
-        lista.map((c) => (c.id === cliente.id ? cliente : c))
-      );
-    } else {
-      cliente.id = Date.now();
+        setClientes((lista) =>
+          lista.map((c) =>
+            c.id === cliente.id ? response.data : c
+          )
+        );
+      } else {
+        const response = await salvarCliente(cliente);
 
-      setClientes((lista) => [...lista, cliente]);
+        setClientes((lista) => [
+          ...lista,
+          response.data,
+        ]);
+      }
+
+      setClienteEditando(null);
+    } catch (error) {
+      console.error("Erro ao salvar cliente:", error);
     }
-
-    setClienteEditando(null);
   }
 
-  function excluir(id) {
-    setClientes((lista) => lista.filter((c) => c.id !== id));
+  async function excluir(id) {
+    try {
+      await excluirCliente(id);
+
+      setClientes((lista) =>
+        lista.filter((c) => c.id !== id)
+      );
+    } catch (error) {
+      console.error("Erro ao excluir cliente:", error);
+    }
   }
 
   const clientesFiltrados = clientes.filter((cliente) =>
